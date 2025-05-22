@@ -1,11 +1,12 @@
 package org.example;
 
-import java.sql.SQLException;
 import java.util.List;
 import java.util.Scanner;
 
 public class CourseMenu {
-    public static void displayMenu(Scanner scanner, databaseDAO<courses> courseDAO) {
+    private static int courseId;
+
+    public static void displayMenu(Scanner scanner, DatabaseDAO<Course> courseDAO) {
         boolean back = false;
 
         while (!back) {
@@ -45,63 +46,69 @@ public class CourseMenu {
         }
     }
 
-    private static void addCourse(Scanner scanner, databaseDAO<courses> courseDAO) {
-        System.out.println("Enter course name: ");
+    private static void addCourse(Scanner scanner, DatabaseDAO<Course> courseDAO) {
+        System.out.print("Enter course name: ");
         String courseName = scanner.nextLine();
 
-        courses course = new courses(courseName);
+        System.out.print("Enter course description: ");
+        String courseDescription = scanner.nextLine();
+
+        Course course = new Course(courseId, courseName, courseDescription);
         courseDAO.add(course);
+        System.out.println("✅ Course added successfully.");
     }
 
-    private static void viewAllCourses(databaseDAO<courses> courseDAO) {
-        List<courses> courseList = courseDAO.getAll();
-        for (courses c : courseList) {
-            System.out.println(c);
-        }
-    }
-
-    private static void getCourseById(Scanner scanner, databaseDAO<courses> courseDAO) {
-        System.out.println("Enter course ID: ");
-        int id = Integer.parseInt(scanner.nextLine());
-
-        try {
-            courses course = courseDAO.getById(id);
-            if (course != null) {
-                System.out.println(course);
-            } else {
-                System.out.println("Course not found.");
+    private static void viewAllCourses(DatabaseDAO<Course> courseDAO) {
+        List<Course> courseList = courseDAO.getAll();
+        if (courseList.isEmpty()) {
+            System.out.println("⚠️ No courses found.");
+        } else {
+            System.out.println("--- All Courses ---");
+            for (Course c : courseList) {
+                System.out.println(c);
             }
-        } catch (SQLException e) {
-            System.out.println("Error: " + e.getMessage());
         }
     }
 
-    private static void updateCourse(Scanner scanner, databaseDAO<courses> courseDAO) {
-        System.out.println("Enter course ID to update: ");
+    private static void getCourseById(Scanner scanner, DatabaseDAO<Course> courseDAO) {
+        System.out.print("Enter course ID: ");
         int id = Integer.parseInt(scanner.nextLine());
 
-        try {
-            courses course = courseDAO.getById(id);
-            if (course == null) {
-                System.out.println("Course not found.");
-                return;
-            }
-
-            System.out.println("Enter new course name: ");
-            String courseName = scanner.nextLine();
-
-            courses updated = new courses(courseName);
-            updated.setId(id);  // make sure you set the ID
-            courseDAO.update(updated);
-
-        } catch (SQLException e) {
-            System.out.println("Error: " + e.getMessage());
+        Course course = courseDAO.getById(id);
+        if (course != null) {
+            System.out.println("✅ Course found:");
+            System.out.println(course);
+        } else {
+            System.out.println("⚠️ Course not found.");
         }
     }
 
-    private static void deleteCourse(Scanner scanner, databaseDAO<courses> courseDAO) {
-        System.out.println("Enter course ID to delete: ");
+    private static void updateCourse(Scanner scanner, DatabaseDAO<Course> courseDAO) {
+        System.out.print("Enter course ID to update: ");
         int id = Integer.parseInt(scanner.nextLine());
+
+        Course course = courseDAO.getById(id);
+        if (course == null) {
+            System.out.println("⚠️ Course not found.");
+            return;
+        }
+
+        System.out.print("Enter new course name: ");
+        String courseName = scanner.nextLine();
+
+        System.out.print("Enter new course description: ");
+        String courseDescription = scanner.nextLine();
+
+        Course updated = new Course(id, courseName, courseDescription);
+        courseDAO.update(updated);
+        System.out.println("✅ Course updated successfully.");
+    }
+
+    private static void deleteCourse(Scanner scanner, DatabaseDAO<Course> courseDAO) {
+        System.out.print("Enter course ID to delete: ");
+        int id = Integer.parseInt(scanner.nextLine());
+
         courseDAO.delete(id);
+        System.out.println("🗑️ Course deleted successfully.");
     }
 }
