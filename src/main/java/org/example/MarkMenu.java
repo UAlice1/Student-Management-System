@@ -8,7 +8,7 @@ public class MarkMenu {
         boolean back = false;
 
         while (!back) {
-            System.out.println("\n--- Marks Menu ---");
+            System.out.println("--- Marks Menu ---");
             System.out.println("1. Add Mark");
             System.out.println("2. View All Marks");
             System.out.println("3. Get Mark by Student & Course ID");
@@ -27,9 +27,9 @@ public class MarkMenu {
                 case 5 -> deleteMark(scanner, markDao);
                 case 6 -> {
                     back = true;
-                    System.out.println("🔙 Returning to main menu...");
+                    System.out.println(" Returning to main menu...");
                 }
-                default -> System.out.println("⚠️ Invalid choice. Please try again.");
+                default -> System.out.println(" Invalid choice. Please try again.");
             }
         }
     }
@@ -42,16 +42,16 @@ public class MarkMenu {
 
             Mark mark = new Mark(studentId, courseId, value);
             markDao.add(mark);
-            System.out.println("✅ Mark added successfully!");
+            System.out.println(" Mark added successfully!");
         } catch (Exception e) {
-            System.out.println("⚠️ Error: " + e.getMessage());
+            System.out.println(" Error: " + e.getMessage());
         }
     }
 
     private static void viewAllMarks(DatabaseDAO<Mark> markDao) {
         List<Mark> marksList = markDao.getAll();
         if (marksList.isEmpty()) {
-            System.out.println("⚠️ No marks found.");
+            System.out.println(" No marks found.");
         } else {
             marksList.forEach(System.out::println);
         }
@@ -63,9 +63,9 @@ public class MarkMenu {
             int courseId = getValidatedIntInput(scanner, "Enter course ID: ");
 
             Mark mark = markDao.getById(studentId, courseId);
-            System.out.println(mark != null ? "✅ Mark details: " + mark : "⚠️ Mark not found.");
+            System.out.println(mark != null ? "Mark details: " + mark : " Mark not found.");
         } catch (Exception e) {
-            System.out.println("⚠️ Error: " + e.getMessage());
+            System.out.println(" Error: " + e.getMessage());
         }
     }
 
@@ -76,16 +76,16 @@ public class MarkMenu {
 
             Mark existingMark = markDao.getById(studentId, courseId);
             if (existingMark == null) {
-                System.out.println("⚠️ Mark not found.");
+                System.out.println("Mark not found.");
                 return;
             }
 
             float newValue = getValidatedFloatInput(scanner, "Enter new mark value: ");
             Mark updatedMark = new Mark(studentId, courseId, newValue);
             markDao.update(updatedMark);
-            System.out.println("✅ Mark updated successfully!");
+            System.out.println(" Mark updated successfully!");
         } catch (Exception e) {
-            System.out.println("⚠️ Error: " + e.getMessage());
+            System.out.println("Error: " + e.getMessage());
         }
     }
 
@@ -95,9 +95,9 @@ public class MarkMenu {
             int courseId = getValidatedIntInput(scanner, "Enter course ID: ");
 
             markDao.delete(studentId, courseId);
-            System.out.println("✅ Mark deleted successfully!");
+            System.out.println(" Mark deleted successfully!");
         } catch (Exception e) {
-            System.out.println("⚠️ Error: " + e.getMessage());
+            System.out.println(" Error: " + e.getMessage());
         }
     }
 
@@ -107,7 +107,7 @@ public class MarkMenu {
             try {
                 return Integer.parseInt(scanner.nextLine().trim());
             } catch (NumberFormatException e) {
-                System.out.print("⚠️ Invalid input. Please enter a valid number: ");
+                System.out.print(" Invalid input. Please enter a valid number: ");
             }
         }
     }
@@ -118,7 +118,7 @@ public class MarkMenu {
             try {
                 return Float.parseFloat(scanner.nextLine().trim());
             } catch (NumberFormatException e) {
-                System.out.print("⚠️ Invalid input. Please enter a valid decimal value: ");
+                System.out.print(" Invalid input. Please enter a valid decimal value: ");
             }
         }
     }

@@ -12,13 +12,13 @@ public class StudentMenu {
 
     public static void displayMenu(Scanner scanner, StudentDao studentDao) {
         while (true) {
-            System.out.println("\n===== 📚 Student Menu =====");
-            System.out.println("1. ➕ Add Student");
-            System.out.println("2. 📋 View All Students");
-            System.out.println("3. ✏️ Update Student");
-            System.out.println("4. 🗑️ Delete Student");
-            System.out.println("5. 🔙 Back to Main Menu");
-            System.out.print("👉 Your choice: ");
+            System.out.println("\n=====  Student Menu =====");
+            System.out.println("1.  Add Student");
+            System.out.println("2. View All Students");
+            System.out.println("3.  Update Student");
+            System.out.println("4.  Delete Student");
+            System.out.println("5.  Back to Main Menu");
+            System.out.print("Your choice: ");
             int choice = getValidatedIntInput(scanner);
 
             switch (choice) {
@@ -27,10 +27,10 @@ public class StudentMenu {
                 case 3 -> updateStudent(scanner, studentDao);
                 case 4 -> deleteStudent(scanner, studentDao);
                 case 5 -> {
-                    System.out.println("🔙 Returning to main menu...");
+                    System.out.println("Returning to main menu...");
                     return;
                 }
-                default -> System.out.println("❌ Invalid choice. Please select a valid option.");
+                default -> System.out.println(" Invalid choice. Please select a valid option.");
             }
         }
     }
@@ -48,15 +48,15 @@ public class StudentMenu {
         LocalDate dob = getValidatedDateInput(scanner, "Enter date of birth (dd/MM/yyyy): ");
 
         studentDao.add(new Student(firstName, lastName, email, dob));
-        System.out.println("✅ Student added successfully.");
+        System.out.println(" Student added successfully.");
     }
 
     private static void viewAllStudents(StudentDao studentDao) {
         List<Student> students = studentDao.getAll();
         if (students.isEmpty()) {
-            System.out.println("📭 No students found.");
+            System.out.println(" No students found.");
         } else {
-            System.out.println("📋 All Students:");
+            System.out.println(" All Students:");
             students.forEach(System.out::println);
         }
     }
@@ -67,7 +67,7 @@ public class StudentMenu {
 
         Student student = studentDao.getById(id);
         if (student == null) {
-            System.out.println("⚠️ Student not found.");
+            System.out.println(" Student not found.");
             return;
         }
 
@@ -84,7 +84,7 @@ public class StudentMenu {
         student.setDateOfBirth(newDob);
 
         studentDao.update(student);
-        System.out.println("✅ Student updated successfully.");
+        System.out.println("Student updated successfully.");
     }
 
     private static void deleteStudent(Scanner scanner, StudentDao studentDao) {
@@ -92,7 +92,7 @@ public class StudentMenu {
         int id = getValidatedIntInput(scanner);
 
         studentDao.delete(id);
-        System.out.println("✅ Student deleted successfully.");
+        System.out.println("Student deleted successfully.");
     }
 
     private static int getValidatedIntInput(Scanner scanner) {
@@ -101,7 +101,7 @@ public class StudentMenu {
             try {
                 return Integer.parseInt(input);
             } catch (NumberFormatException e) {
-                System.out.print("❌ Invalid input. Please enter a number: ");
+                System.out.print("Invalid input. Please enter a number: ");
             }
         }
     }
@@ -113,7 +113,7 @@ public class StudentMenu {
             try {
                 return LocalDate.parse(input, DATE_FORMATTER);
             } catch (DateTimeParseException e) {
-                System.out.println("❌ Invalid date format. Please use dd/MM/yyyy.");
+                System.out.println(" Invalid date format. Please use dd/MM/yyyy.");
             }
         }
     }

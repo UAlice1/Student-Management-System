@@ -55,13 +55,13 @@ public class CourseMenu {
 
         Course course = new Course(courseId, courseName, courseDescription);
         courseDAO.add(course);
-        System.out.println("✅ Course added successfully.");
+        System.out.println(" Course added successfully.");
     }
 
     private static void viewAllCourses(DatabaseDAO<Course> courseDAO) {
         List<Course> courseList = courseDAO.getAll();
         if (courseList.isEmpty()) {
-            System.out.println("⚠️ No courses found.");
+            System.out.println(" No courses found.");
         } else {
             System.out.println("--- All Courses ---");
             for (Course c : courseList) {
@@ -76,10 +76,10 @@ public class CourseMenu {
 
         Course course = courseDAO.getById(id);
         if (course != null) {
-            System.out.println("✅ Course found:");
+            System.out.println(" Course found:");
             System.out.println(course);
         } else {
-            System.out.println("⚠️ Course not found.");
+            System.out.println(" Course not found.");
         }
     }
 
@@ -89,7 +89,7 @@ public class CourseMenu {
 
         Course course = courseDAO.getById(id);
         if (course == null) {
-            System.out.println("⚠️ Course not found.");
+            System.out.println("Course not found.");
             return;
         }
 
@@ -101,7 +101,7 @@ public class CourseMenu {
 
         Course updated = new Course(id, courseName, courseDescription);
         courseDAO.update(updated);
-        System.out.println("✅ Course updated successfully.");
+        System.out.println(" Course updated successfully.");
     }
 
     private static void deleteCourse(Scanner scanner, DatabaseDAO<Course> courseDAO) {
@@ -109,6 +109,6 @@ public class CourseMenu {
         int id = Integer.parseInt(scanner.nextLine());
 
         courseDAO.delete(id);
-        System.out.println("🗑️ Course deleted successfully.");
+        System.out.println(" Course deleted successfully.");
     }
 }
